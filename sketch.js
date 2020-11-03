@@ -38,7 +38,7 @@ function setup() {
 function draw() {
   background(220);
   //adding gravity
-    monkey.velocityY = monkey.velocityY + 1.5;
+    monkey.velocityY = monkey.velocityY + 3;
   
  //make monkey collide with invisible ground
     monkey.collide(ground);
@@ -57,7 +57,7 @@ function draw() {
     
     //adding jump 
     if(keyDown("space") && monkey.y === 429.95) {
-             monkey.velocityY=-25;
+             monkey.velocityY=-40;
       
            }
     if(monkey.isTouching(obstacleGroup)) {
@@ -91,13 +91,14 @@ function draw() {
 function obstacles() {
   if (frameCount % 150 === 0) {
 
-    obstacle = createSprite(400, 450);
+    obstacle = createSprite(600, 450);
     obstacle.addAnimation("rock", obstaceImage);
     obstacle.setCollider("circle", 0, 0, 180);
     obstacle.scale = 0.13;
     obstacle.velocityX=-8;
     obstacle.lifetime = 130;
     obstacleGroup.add(obstacle);
+    obstacle.velocityX = -(8 + 2*score/5);
 
   }
 }
@@ -113,6 +114,8 @@ function Spanbanana() {
     banana.y=rand;
     console.log(banana.y)
    
+    banana.velocityX = -(10 + 2*score/5);
+
     banana.lifetime=70;
     bananaGroup.add(banana);
   } 
