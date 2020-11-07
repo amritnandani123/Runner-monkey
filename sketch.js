@@ -47,12 +47,11 @@ function setup() {
 
 function draw() {
   background(220);
-  jungle.velocityX=-8;
+  jungle.velocityX=-5;
   if (jungle.x < 0){
     jungle.x = jungle.width/2;
   }
 
-jungle.velocityX = -(8 + 2*score1/5);
 
   //adding gravity
     monkey.velocityY = monkey.velocityY + 3;
@@ -116,7 +115,7 @@ jungle.velocityX = -(8 + 2*score1/5);
 function obstacles() {
   if (frameCount % 150 === 0) {
 
-    obstacle = createSprite(800, 450);
+    obstacle = createSprite(600, 450);
     obstacle.addAnimation("rock", obstaceImage);
     obstacle.setCollider("circle", 0, 0, 180);
     obstacle.scale = 0.13;
@@ -131,7 +130,7 @@ function obstacles() {
 function Spanbanana() {
   if(frameCount % 80 ===0){
     banana=createSprite(600,200);
-    banana.velocityX=-8;
+    banana.velocityX=-10;
     banana.addImage("banana",bananaImage)
     banana.scale=0.1;
     var rand;
@@ -139,7 +138,7 @@ function Spanbanana() {
     banana.y=rand;
     console.log(banana.y)
    
-    banana.velocityX = -(8 + 2*score1/5);
+    banana.velocityX = -(10 + 2*score1/5);
 
     banana.lifetime=70;
     bananaGroup.add(banana);
