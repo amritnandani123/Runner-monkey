@@ -24,7 +24,7 @@ function preload(){
 
 
 function setup() {
- createCanvas(500,500)
+ createCanvas(800,500)
  
  jungle=createSprite(250,250);
  jungle.addImage("jungle",jungle_img);
