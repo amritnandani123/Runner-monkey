@@ -1,20 +1,22 @@
-
+var jungle, jungle_img;
 var monkey , monkey_running
 var banana ,bananaImage, obstacle, obstacleImage
 var FoodGroup, obstacleGroup
-var score=0;
+var score1=0;
+var score2=0;
 var gameState= "play";
 var gameover,gameover_img;
+var bananaeat;
 
 
 function preload(){
   
   
-  monkey_running =            loadAnimation("sprite_0.png","sprite_1.png","sprite_2.png","sprite_3.png","sprite_4.png","sprite_5.png","sprite_6.png","sprite_7.png","sprite_8.png")
+  monkey_running =            loadAnimation("Monkey_01.png","Monkey_02.png","Monkey_03.png","Monkey_04.png","Monkey_05.png","Monkey_06.png","Monkey_07.png","Monkey_08.png","Monkey_09.png","Monkey_10.png");
   
   bananaImage = loadImage("banana.png");
   obstaceImage = loadImage("obstacle.png");
-  
+  jungle_img = loadImage("jungle.jpg"); 
 
  
 }
@@ -23,20 +25,34 @@ function preload(){
 
 function setup() {
  createCanvas(500,500)
+ 
+ jungle=createSprite(250,250);
+ jungle.addImage("jungle",jungle_img);
+ 
    monkey=createSprite(80,310); 
    monkey.addAnimation("moving",monkey_running);
    monkey.scale=0.15;
    
    ground=createSprite(250,480,500,8);
+   ground.visible=false;
   
+   
  // creating groups for obasticle and bananas
   obstacleGroup = createGroup();
   bananaGroup = createGroup();
+
+
 }
 
 
 function draw() {
   background(220);
+  jungle.velocityX=-5;
+  if (jungle.x < 0){
+    jungle.x = jungle.width/2;
+  }
+
+
   //adding gravity
     monkey.velocityY = monkey.velocityY + 3;
   
@@ -45,7 +61,7 @@ function draw() {
  
   if(gameState === "play") {
     if(frameCount % 10 ===0) {
-      score=score+1;
+      score1=score1+1;
     }
     Spanbanana();
     //adding obasticles
@@ -56,7 +72,7 @@ function draw() {
 
     
     //adding jump 
-    if(keyDown("space") && monkey.y === 429.95) {
+    if(keyWentDown("space")) {
              monkey.velocityY=-40;
       
            }
@@ -67,6 +83,11 @@ function draw() {
     }
      if(bananaGroup.isTouching(monkey)) {  
       bananaGroup.destroyEach();
+      score2=score2+1;
+      monkey.scale=(0.15+1*score2/50);
+
+      
+
     }
    
   
@@ -75,9 +96,11 @@ function draw() {
        
         obstacleGroup.setVelocityXEach(0);
         bananaGroup.setVelocityXEach(0);
+        jungle.velocityX=0;
         obstacleGroup.setLifetimeEach(-1);
        bananaGroup.setLifetimeEach(-1);
         monkey.addAnimation("moving",monkey_running);
+        monkey.scale=0.12;
         if(keyDown("space")) {
           reset();
         }
@@ -85,7 +108,8 @@ function draw() {
                }
   
   drawSprites();
-  text("Survival Time: "+score,400,50)
+  text("Survival Time: "+score1,400,50)
+  text("Score:"+score2,50,50);
 }
 
 function obstacles() {
@@ -98,7 +122,7 @@ function obstacles() {
     obstacle.velocityX=-8;
     obstacle.lifetime = 130;
     obstacleGroup.add(obstacle);
-    obstacle.velocityX = -(8 + 2*score/5);
+    obstacle.velocityX = -(8 + 2*score1/5);
 
   }
 }
@@ -114,7 +138,7 @@ function Spanbanana() {
     banana.y=rand;
     console.log(banana.y)
    
-    banana.velocityX = -(10 + 2*score/5);
+    banana.velocityX = -(10 + 2*score1/5);
 
     banana.lifetime=70;
     bananaGroup.add(banana);
@@ -129,7 +153,9 @@ function reset() {
   bananaGroup.setVelocityXEach(-8);
   obstacleGroup.destroyEach();
   bananaGroup.destroyEach();
-  score=0;
+  score1=0;
+  score2=0;
+  monkey.scale=0.15;
 }
 
 
